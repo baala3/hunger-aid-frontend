@@ -1,24 +1,13 @@
-# FOOD WASTE MANAGEMENT
+# HungerAid
+
+—- _Sharing surplus, feeding hope_
 
 ### Hosted on Netlify
--[live url](https://food-waste-management-system.netlify.app/)
+-[live url](https://hunger-aid.netlify.app/)
 
 ### Project Problem Statement:
-Every restaurant has perfectly good food that they cannot sell at the end of their day. 
-Large amount of these food goes wasted and is thrown away in the dumping zone. 
-How can one efficiently use this food to kill someone’s hunger? What if there is a 
-platform which connects restaurants to institutes such as food banks. With this platform 
-not only, food banks can serve more hungry people additionally restaurants will also 
-have a meaningful channel to distribute or dispose of the surplus food. It’s a win-win 
-situation where business can contribute to a sustainable environment in a 
-meaningful way at the same time charities help fight food poverty.     
-For this to happen both food banks and restaurants will have to register 
-with the platform and exchange information regarding how much food is remaining and 
-food banks can collect those food from the nearest restaurants
+refer here: https://github.com/baala3/hunger-aid-frontend
 
-### Proposed Solution/Project Idea:
-Using MongoDB, we are developing and hosting a 3-Tier Web Application which enables everyone to post food availablity in their known location. 
-The application provides a portal where local charities can sign up to this platform. When notified about food availability, the charity responds by accepting to collect the food from the location.
 ###	Features List
 1.	Sign up form for new user to create an account. A new user record is created in MongoDB. If an already existing user tries to sign up, he is prevented in doing the same.
 2.	Login Page to allow only authorized users to login. Performs validation for username and password match. A role based login is enabled to redirect users to either Business Home Page or Charity Home Page. 
@@ -39,6 +28,3 @@ Tech Stack used:
 8. JWT (Authentication)
 9. Redux, (React-Redux)
 10. React-swipeable-views
-
-
-
