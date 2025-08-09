@@ -42,6 +42,7 @@ export const LoadUser = (onSuccess) => {
             let token = localStorage.getItem("token");
             if (!token) {
                 dispatch({ type: ERROR, payload: "token not found" });
+                if (onSuccess) onSuccess();
                 return;
             }
             const user = await axios.get('https://hunger-aid-backend.vercel.app/api/auth/getuser', {
