@@ -252,7 +252,8 @@ class AddProduct extends React.Component {
                         <Box key={index} margin="12px">
                             <img
                                 src={this.uploadImageURL(item)}
-                                style={{ height: "160px", width: "160px", objectFit: "cover" }} />
+                                style={{ height: "160px", width: "160px", objectFit: "cover" }}
+                                alt="Food donation item" />
                             <br />
                             <IconButton
                                 aria-label="delete"

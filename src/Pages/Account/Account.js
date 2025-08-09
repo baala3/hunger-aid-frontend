@@ -1,14 +1,12 @@
 import { Paper, TextField, Snackbar } from '@material-ui/core';
 import React, { useState } from 'react';
 import './Account.css';
-import Avatarimg from '../../Media/Avatarimg.png';
 import Post from '../../components/Post/Post';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
@@ -107,6 +105,11 @@ function Account(props) {
     }
 
 
+    // Don't render if user is not loaded
+    if (!props.user?._id) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="account_main">
             <div className="account_wrapper">
@@ -117,20 +120,20 @@ function Account(props) {
                 <div className="accout_wrapper_right">
                     <h3>{props.user?.email}<EditIcon onClick={() => handleClickOpen()} className="edit-icon" /></h3>
                     <p>{props?.user?.name} (<abbr className="upvotes" title="Up Votes">{props.posts?.posts?.filter((post) => {
-                        return post.postedBy._id === props.user._id
-                    }).reduce((c, d) => c += d.points.length, 0)}</abbr>)</p>
+                        return post.postedBy?._id === props.user?._id
+                    }).reduce((c, d) => c += d.points.length, 0) || 0}</abbr>)</p>
 
                 </div>
             </div>
             <Paper className='account_paper' elevation={3}>
 
                 <h3 className="my-posts">{props.posts?.posts?.filter((post) => {
-                    return post.postedBy._id === props.user._id
+                    return post.postedBy?._id === props.user?._id
                 }).length === 0 ? "no posts" : "My posts"}</h3>
                 <div className="account_posts">
                     {
                         props.posts?.posts?.filter((post) => {
-                            return post.postedBy._id === props.user._id
+                            return post.postedBy?._id === props.user?._id
                         }).map((post, index) => (
                             <Post
                                 myPosts={true}

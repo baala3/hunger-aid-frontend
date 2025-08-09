@@ -56,7 +56,7 @@ const postReducer = (state = initState, action) => {
 
             state.posts.splice(state.posts.indexOf(rpost, 1));
             if (rpost.points.includes(action.payload.currentUserId)) {
-                rpost.points = rpost.points.filter((p => p != action.payload.currentUserId))
+                rpost.points = rpost.points.filter((p => p !== action.payload.currentUserId))
             }
             else {
                 rpost.points.push(action.payload.currentUserId)

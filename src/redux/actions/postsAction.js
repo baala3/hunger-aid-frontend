@@ -11,7 +11,7 @@ import axios from 'axios'
 export const LoadPosts = (onSuccess) => {
     return async (dispatch, getState) => {
         try {
-            const posts = await axios.get('https://food-waste-management.herokuapp.com/api/post/allposts');
+            const posts = await axios.get('https://hunger-aid-backend.vercel.app/api/post/allposts');
             dispatch({ type: LOAD_POSTS, payload: posts.data });
             onSuccess();
         } catch (err) {
@@ -30,7 +30,7 @@ export const CreatePosts = (images, sdata, eraserData) => {
                 data.append('file', image);
                 data.append('upload_preset', "SocialMedia");
                 data.append('cloud_name', "djqrcbjmu");
-                const data1 = await fetch("	https://api.cloudinary.com/v1_1/djqrcbjmu/image/upload", {
+                const data1 = await fetch("https://api.cloudinary.com/v1_1/djqrcbjmu/image/upload", {
                     method: "post",
                     body: data
                 });
@@ -42,15 +42,20 @@ export const CreatePosts = (images, sdata, eraserData) => {
                     sdata['images'] = imgUrls;
 
                     const fulladdress = sdata['country'] + ',' + sdata['city'] + ',' + sdata['address'];
-                    const getLatLangFromAddress = await axios.get(`https://www.mapquestapi.com/geocoding/v1/address?key=iIzTGMTjj6hWGGvsPSShyeDxyifWFnpL&location=${fulladdress}`);
-                    const latLng = getLatLangFromAddress.data.results[0].locations[0].latLng;
-                    const lat = latLng.lat.toString();
-                    const lng = latLng.lng.toString();
+                    // Using Nominatim (OpenStreetMap) - Free, no API key required
+                    const getLatLangFromAddress = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fulladdress)}&limit=1`);
+                    
+                    if (getLatLangFromAddress.data.length === 0) {
+                        throw new Error('Address not found');
+                    }
+                    
+                    const lat = getLatLangFromAddress.data[0].lat;
+                    const lng = getLatLangFromAddress.data[0].lon;
 
                     sdata['lat'] = lat;
                     sdata['lon'] = lng;
 
-                    const upload = await axios.post('https://food-waste-management.herokuapp.com/api/post/addpost', sdata, {
+                    const upload = await axios.post('https://hunger-aid-backend.vercel.app/api/post/addpost', sdata, {
                         headers: {
                             'authentication': localStorage.getItem('token')
                         }
@@ -101,7 +106,7 @@ export const UpdatePost = (id, pi, images, sdata, eraserData) => {
                 }
                 if (imgUrls.length === images.length) {
                     sdata['images'] = imgUrls;
-                    const upload = await axios.put(`https://food-waste-management.herokuapp.com/api/post/${id}`, sdata, {
+                    const upload = await axios.put(`https://hunger-aid-backend.vercel.app/api/post/${id}`, sdata, {
                         headers: {
                             'authentication': localStorage.getItem('token')
                         }
@@ -129,7 +134,7 @@ export const DeletePost = (id) => {
     return async (dispatch, getState) => {
 
         try {
-            const status = await axios.delete(`https://food-waste-management.herokuapp.com/api/post/${id}`, {
+            const status = await axios.delete(`https://hunger-aid-backend.vercel.app/api/post/${id}`, {
                 headers: {
                     'authentication': localStorage.getItem('token')
 
@@ -149,7 +154,7 @@ export const DeletePost = (id) => {
 export const upVote = (postId, currentUserId) => {
     return async (dispatch, getState) => {
         try {
-            const vpvoted = await axios.post('https://food-waste-management.herokuapp.com/api/post/upvote', { id: postId }, {
+            await axios.post('https://hunger-aid-backend.vercel.app/api/post/switchvote', { id: postId }, {
                 headers: {
                     'authentication': localStorage.getItem('token')
 

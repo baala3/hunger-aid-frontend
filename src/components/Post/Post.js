@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './Post.css'
 import { autoPlay } from 'react-swipeable-views-utils';
 import { format } from 'timeago.js'
@@ -19,7 +19,6 @@ function Post(props) {
 
 
     const [activeStep, setactiveStep] = useState(0);
-    const [vote, setVote] = useState("");
     const handleStepChange = (step) => {
         setactiveStep(step);
 
@@ -37,7 +36,7 @@ function Post(props) {
                     <p className="posted_on">posted on - {format(props.post?.createdAt)}</p>
 
                     <div className="posted_by_user">
-                        <img src={props.post?.postedBy?.image} />
+                        <img src={props.post?.postedBy?.image} alt="User profile" />
                         <h4>{props.post?.postedBy?.name}</h4>
 
                     </div>
@@ -113,7 +112,7 @@ function Post(props) {
                                     show on map
                                 </button>
                                 <button className="di_req_now_btn">
-                                    <a target="_blank" href={`https://www.google.com/maps/search/?api=1&query=${props.post?.address}`}>show directions</a>   </button>
+                                    <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${props.post?.address}`}>show directions</a>   </button>
                             </>
                             :
                             <div className="upost_button">

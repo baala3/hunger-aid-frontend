@@ -57,7 +57,7 @@ function Home(props) {
 
         btnRef.current.innerHTML = "Sending..."
 
-        Axios.post("https://food-waste-management.herokuapp.com/api/post/mail",
+        Axios.post("https://hunger-aid-backend.vercel.app/api/post/mail",
             {
                 frommail: "protfoliobala@gmail.com",
                 password: "Protfolio@99",

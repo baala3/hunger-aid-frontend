@@ -21,16 +21,17 @@ import {
 function Main(props) {
 
     const [loading, setLoading] = useState(false);
+    const { LoadUser, LoadPosts } = props;
 
     useEffect(() => {
         setLoading(true);
-        props.LoadUser(() => {
+        LoadUser(() => {
             setLoading(false);
         });
-        props.LoadPosts(() => {
+        LoadPosts(() => {
             setLoading(false);
         });
-    }, [])
+    }, [LoadUser, LoadPosts])
     return (
 
         <div>

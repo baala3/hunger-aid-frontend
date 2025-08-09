@@ -4,7 +4,6 @@ import {
     SIGNUP_USER,
     LOGOUT_USER,
     ERROR,
-    UP_VOTE,
     UPDATE_USER
 } from '../actionTypes';
 

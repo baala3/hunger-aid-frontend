@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Dashboard.css';
 import { useHistory } from 'react-router-dom'
 import Post from '../../components/Post/Post';
@@ -55,18 +55,19 @@ function Dashboard(props) {
         prevOpen.current = open;
     }, [open]);
 
-    React.useEffect(async () => {
-
-        await navigator.geolocation.getCurrentPosition(
-            position => {
-                setuserCurrentlocation({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                })
-            },
-            err => console.log(err)
-        );
-
+    React.useEffect(() => {
+        const getCurrentLocation = async () => {
+            await navigator.geolocation.getCurrentPosition(
+                position => {
+                    setuserCurrentlocation({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    })
+                },
+                err => console.log(err)
+            );
+        };
+        getCurrentLocation();
     }, [])
     const setCurrentFilter = (e, fil) => {
         setfilter(fil);
@@ -126,10 +127,10 @@ function Dashboard(props) {
                                             return allitems.toString().includes(inputval);
                                         }
                                         else if (filter === "Country") {
-                                            return (post.country.includes(inputval))
+                                            return (post.country?.includes(inputval) || false)
                                         }
                                         else {
-                                            return (post.postedBy.name.includes(inputval))
+                                            return (post.postedBy?.name?.includes(inputval) || false)
 
                                         }
                                     }).map((post, index) => (

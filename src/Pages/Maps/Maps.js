@@ -30,65 +30,65 @@ export default function Maps(props) {
     const [currentState, setcurrentState] = useState(null)
     const [userCurrentlocation, setuserCurrentlocation] = useState({ latitude: 0, longitude: 0 });
     // console.log(userCurrentlocation)
-    useEffect(async () => {
-
-        await navigator.geolocation.getCurrentPosition(
-            position => {
-                setuserCurrentlocation({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                })
-            },
-            err => console.log(err)
-        );
-
-    }, [])
-    useEffect(async () => {
-        const foodList = [];
-        props.data?.posts?.map((post) => {
-            const postob = {};
-            postob['lat'] = post.lat;
-            postob['lon'] = post.lon;
-            postob['id'] = post._id;
-            postob['address'] = post.address;
-            postob['description'] = post.description;
-            postob['foods'] = [];
-            post.fooditems.map((item) => {
-                postob['foods'].push(item.item_name);
-            })
-            postob['foods'] = postob['foods'].toString();
-            foodList.push(postob);
-
-
-        })
-        setfoodItems(foodList);
-
-        if (location.state?.fromPost === true) {
-            setViewport({
-                ...viewport,
-                latitude: location.state.lat,
-                longitude: location.state.lon
-            });
-
-            setcurrentState(location.state.id)
-        }
-        else {
+    useEffect(() => {
+        const getCurrentLocation = async () => {
             await navigator.geolocation.getCurrentPosition(
                 position => {
-                    setViewport({
-                        ...viewport,
+                    setuserCurrentlocation({
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
-                    });
+                    })
                 },
                 err => console.log(err)
             );
-        }
+        };
+        getCurrentLocation();
+    }, [])
+    useEffect(() => {
+        const processPosts = async () => {
+            const foodList = [];
+            props.data?.posts?.map((post) => {
+                const postob = {};
+                postob['lat'] = post.lat;
+                postob['lon'] = post.lon;
+                postob['id'] = post._id;
+                postob['address'] = post.address;
+                postob['description'] = post.description;
+                postob['foods'] = [];
+                post.fooditems.map((item) => {
+                    postob['foods'].push(item.item_name);
+                    return item;
+                })
+                postob['foods'] = postob['foods'].toString();
+                foodList.push(postob);
+                return post;
+            })
+            setfoodItems(foodList);
 
+            if (location.state?.fromPost === true) {
+                setViewport({
+                    ...viewport,
+                    latitude: location.state.lat,
+                    longitude: location.state.lon
+                });
 
-
-
-    }, [props.data?.posts])
+                setcurrentState(location.state.id)
+            }
+            else {
+                await navigator.geolocation.getCurrentPosition(
+                    position => {
+                        setViewport({
+                            ...viewport,
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        });
+                    },
+                    err => console.log(err)
+                );
+            }
+        };
+        processPosts();
+    }, [props.data?.posts, location.state?.fromPost, location.state?.id, location.state?.lat, location.state?.lon, viewport])
     const handleInputChange = () => {
         setsearchedvalue(inputRef.current.value)
 
@@ -116,7 +116,7 @@ export default function Maps(props) {
                             <p><b>Foods</b> : {food.foods}</p>
                             <p><b>Description</b> : {food.description}</p>
                             <div>
-                                <button className="map-dir-btn"><a target="_blank" href={`https://www.google.com/maps/search/?api=1&query=${food.address}`}>direction</a></button>
+                                <button className="map-dir-btn"><a target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${food.address}`}>direction</a></button>
                                 <button className="map-loc-btn" onClick={() => handleMarkerClick(food.id, food.lat, food.lon)}>location</button>
                             </div>
                         </Paper>)
@@ -161,7 +161,7 @@ export default function Maps(props) {
                                         anchor="bottom" >
                                         <div style={{ zIndex: "200" }}>
                                             <span className="maptimeago">{format(post.createdAt)}</span>
-                                            <div className="mapuser"><img src={post.postedBy.image} /><p>{post.postedBy.name}</p></div>
+                                            <div className="mapuser"><img src={post.postedBy.image} alt="User avatar" /><p>{post.postedBy.name}</p></div>
 
                                             <div style={{ fontSize: "12px", marginTop: "5px" }}><span style={{ color: "#FF00FF" }}>description :</span>  {post.description}</div>
 

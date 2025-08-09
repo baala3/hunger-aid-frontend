@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './Register.css';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import {
     Backdrop,
@@ -79,9 +78,9 @@ export default function Register(props) {
                         <form onSubmit={(e) => { e.preventDefault(); signUpUser() }}>
                             <h1 className="create_account">Create Account</h1>
                             <div className="social-container">
-                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
-                                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
-                                <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                                <a className="social" href="https://www.facebook.com/"><i className="fab fa-facebook-f"></i></a>
+                                <a className="social" href="https://www.google.com/"><i className="fab fa-google-plus-g"></i></a>
+                                <a className="social" href="https://www.linkedin.com/"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>or use your email for registration</span>
                             <input
@@ -106,9 +105,9 @@ export default function Register(props) {
                         <form onSubmit={(e) => { e.preventDefault(); signInUser() }}>
                             <h1>Sign in</h1>
                             <div className="social-container">
-                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
-                                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
-                                <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                                <a className="social" href="https://www.facebook.com/"><i className="fab fa-facebook-f"></i></a>
+                                <a className="social" href="https://www.google.com/"><i className="fab fa-google-plus-g"></i></a>
+                                <a className="social" href="https://www.linkedin.com/"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>or use your account</span>
                             <input
@@ -121,7 +120,7 @@ export default function Register(props) {
                                 onChange={(e) => setPassword(e.target.value)}
                                 type="password"
                                 placeholder="Password" />
-                            <a href="#">Forgot your password?</a>
+                            <a type="button" style={{border: 'none', background: 'none', color: 'inherit', textDecoration: 'underline', cursor: 'pointer'}} href="https://www.google.com/">Forgot your password?</a>
                             <button type="submit">Sign In</button>
                         </form>
                     </div>
