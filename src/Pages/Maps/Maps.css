@@ -33,13 +33,9 @@
 .map_search{
     border: 1px solid black;
     opacity: 0.8;
-    position: fixed;
-    top: 0;
-    left: 37.5%;
     height: 35px;
     outline: none;
-    width: 50%;
-    margin: 0px auto;
+    flex: 1;
     font-size: 18px;
     padding-left: 7px;
     padding-right: 7px;
@@ -97,6 +93,48 @@
 
 .map-loc-btn:active{
     transform: scale(0.95);
+}
+
+.map-search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    top: 0;
+    left: 37.5%;
+    z-index: 1000;
+    width: 50%;
+}
+
+.map-home-btn{
+    border: 1px solid #2196F3;
+    padding: 8px 16px;
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    color: #2196F3;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    height: 35px;
+}
+
+.map-home-btn:hover{
+    background: #2196F3;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.map-home-btn:active{
+    transform: translateY(0px) scale(0.98);
 }
 .map-food-item a {
     text-decoration: none;

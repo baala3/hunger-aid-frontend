@@ -3,7 +3,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import RoomIcon from '@material-ui/icons/Room';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import { format } from 'timeago.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,6 +17,7 @@ import './Maps.css';
 export default function Maps(props) {
     const inputRef = useRef();
     const location = useLocation();
+    const history = useHistory();
 
     const [viewport, setViewport] = useState({
         width: "100%",
@@ -207,7 +208,16 @@ export default function Maps(props) {
                     }
 
 
-                    <input placeholder="search food items here..." ref={inputRef} onChange={handleInputChange} className="map_search" type="search" required />
+                    <div className="map-search-container">
+                        <button 
+                            className="map-home-btn" 
+                            onClick={() => history.push('/')}
+                            title="Go to Home"
+                        >
+                            🏠 Home
+                        </button>
+                        <input placeholder="search food items here..." ref={inputRef} onChange={handleInputChange} className="map_search" type="search" required />
+                    </div>
 
                 </ReactMapGL></div>
         </div>
