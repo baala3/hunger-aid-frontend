@@ -146,7 +146,8 @@ export const DeletePost = (id) => {
             });
         }
         catch (err) {
-            console.log(err.message);
+            console.error('Error deleting post:', err);
+            dispatch({ type: ERROR, payload: err.response || err.message });
         }
 
     }
@@ -164,7 +165,8 @@ export const upVote = (postId, currentUserId) => {
 
         }
         catch (err) {
-            console.log(err.message);
+            console.error('Error voting on post:', err);
+            dispatch({ type: ERROR, payload: err.response || err.message });
         }
 
 

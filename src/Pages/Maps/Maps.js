@@ -56,9 +56,8 @@ export default function Maps(props) {
                 postob['address'] = post.address;
                 postob['description'] = post.description;
                 postob['foods'] = [];
-                post.fooditems.map((item) => {
+                post.fooditems?.forEach((item) => {
                     postob['foods'].push(item.item_name);
-                    return item;
                 })
                 postob['foods'] = postob['foods'].toString();
                 foodList.push(postob);
@@ -84,12 +83,12 @@ export default function Maps(props) {
                             longitude: position.coords.longitude
                         });
                     },
-                    err => console.log(err)
+                    err => console.error('Geolocation error:', err)
                 );
             }
         };
         processPosts();
-    }, [props.data?.posts, location.state?.fromPost, location.state?.id, location.state?.lat, location.state?.lon, viewport])
+    }, [props.data?.posts, location.state?.fromPost, location.state?.id, location.state?.lat, location.state?.lon])
     const handleInputChange = () => {
         setsearchedvalue(inputRef.current.value)
 

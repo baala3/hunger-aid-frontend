@@ -25,11 +25,22 @@ function Main(props) {
 
     useEffect(() => {
         setLoading(true);
+        let loadUserComplete = false;
+        let loadPostsComplete = false;
+        
+        const checkBothComplete = () => {
+            if (loadUserComplete && loadPostsComplete) {
+                setLoading(false);
+            }
+        };
+        
         LoadUser(() => {
-            setLoading(false);
+            loadUserComplete = true;
+            checkBothComplete();
         });
         LoadPosts(() => {
-            setLoading(false);
+            loadPostsComplete = true;
+            checkBothComplete();
         });
     }, [LoadUser, LoadPosts])
     return (

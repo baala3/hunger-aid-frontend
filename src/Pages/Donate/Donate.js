@@ -63,7 +63,7 @@ class AddProduct extends React.Component {
             Description: { error: "", value: props.location.state ? props.location?.state?.description : "" },
             address: { error: "", value: props.location.state ? props.location?.state?.address : "" },
             country: props.location.state ? props.location?.state?.country : "",
-            region: props.location.state ? props.location?.state?.region : "",
+            region: props.location.state ? (props.location?.state?.city || props.location?.state?.region || "") : "",
             any_other: { error: "", value: props.location.state ? props.location?.state?.any_other : "" },
             images: props.location.state ? [...props.location?.state?.images] : [],
             columns: [
@@ -183,14 +183,14 @@ class AddProduct extends React.Component {
         // if (this.checkValidation(this.state.region, "select region"))
         //     return;
 
-        if (this.state.country.trim().length === 0) {
+        if (!this.state.country || this.state.country.trim().length === 0) {
             this.setState({
                 snakbarmessage: "select country",
                 open: true
             })
             return;
         }
-        if (this.state.region.trim().length === 0) {
+        if (!this.state.region || this.state.region.trim().length === 0) {
             this.setState({
                 snakbarmessage: "select region",
                 open: true
@@ -217,6 +217,7 @@ class AddProduct extends React.Component {
         sdata['country'] = this.state.country;
         sdata['city'] = this.state.region;
         sdata['postedBy'] = this.props.id;
+        // Note: These coordinates will be updated by geocoding in the action
         sdata['lat'] = "22";
         sdata['lon'] = "33";
         sdata['address'] = this.state.address.value;

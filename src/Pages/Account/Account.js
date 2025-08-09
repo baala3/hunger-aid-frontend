@@ -58,7 +58,7 @@ function Account(props) {
             data.append('upload_preset', "SocialMedia");
             data.append('cloud_name', "djqrcbjmu");
 
-            fetch("	https://api.cloudinary.com/v1_1/djqrcbjmu/image/upload", {
+            fetch("https://api.cloudinary.com/v1_1/djqrcbjmu/image/upload", {
                 method: "post",
                 body: data
             })
@@ -77,6 +77,12 @@ function Account(props) {
                         setSnackOpen(false);
                     });
                 })
+                .catch(error => {
+                    console.error('Error uploading image:', error);
+                    setSnackOpen(true);
+                    setSnackText("Upload failed");
+                    setTimeout(() => setSnackOpen(false), 3000);
+                });
         }
         else if (valid) {
 
@@ -182,7 +188,7 @@ function Account(props) {
                             <Button type="button" onClick={handleClose} color="primary">
                                 cancel
                             </Button>
-                            <Button type="submit" onClick={handleClose} color="primary">
+                            <Button type="submit" color="primary">
                                 Update
                             </Button>
                         </DialogActions>

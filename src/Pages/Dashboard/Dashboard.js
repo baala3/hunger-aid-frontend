@@ -56,15 +56,15 @@ function Dashboard(props) {
     }, [open]);
 
     React.useEffect(() => {
-        const getCurrentLocation = async () => {
-            await navigator.geolocation.getCurrentPosition(
+        const getCurrentLocation = () => {
+            navigator.geolocation.getCurrentPosition(
                 position => {
                     setuserCurrentlocation({
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
                     })
                 },
-                err => console.log(err)
+                err => console.error('Geolocation error:', err)
             );
         };
         getCurrentLocation();
@@ -115,14 +115,14 @@ function Dashboard(props) {
                                         return d1 - d2;
                                     }
                                     else {
-                                        return Date.parse(a.updatedAt) < Date.parse(b.updatedAt);
+                                        return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
                                     }
                                 })
 
                                     .filter((post, index) => {
                                         if (filter === "Food") {
                                             const allitems = [];
-                                            post.fooditems.map((item) => allitems.push(item.item_name));
+                                            post.fooditems?.forEach((item) => allitems.push(item.item_name));
 
                                             return allitems.toString().includes(inputval);
                                         }

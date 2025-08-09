@@ -38,15 +38,26 @@ export default function Register(props) {
             email
         }
         props.LoginUser(Data, () => {
+            let loadUserComplete = false;
+            let loadPostsComplete = false;
+            
+            const checkBothComplete = () => {
+                if (loadUserComplete && loadPostsComplete) {
+                    setLoading(false);
+                    history.replace('/');
+                }
+            };
+            
             props.LoadUser(() => {
-                setLoading(false);
+                loadUserComplete = true;
                 console.log("user loaded");
+                checkBothComplete();
             });
             props.LoadPosts(() => {
-                setLoading(false);
-                console.log("posts loaded")
+                loadPostsComplete = true;
+                console.log("posts loaded");
+                checkBothComplete();
             });
-            history.replace('/');
         })
 
 
@@ -60,13 +71,25 @@ export default function Register(props) {
             password: rpassword
         }
         props.signupUser(Data, () => {
+            let loadUserComplete = false;
+            let loadPostsComplete = false;
+            
+            const checkBothComplete = () => {
+                if (loadUserComplete && loadPostsComplete) {
+                    history.replace('/');
+                }
+            };
+            
             props.LoadUser(() => {
+                loadUserComplete = true;
                 console.log("user loaded");
+                checkBothComplete();
             });
             props.LoadPosts(() => {
-                console.log("posts loaded")
+                loadPostsComplete = true;
+                console.log("posts loaded");
+                checkBothComplete();
             });
-            history.replace('/');
         })
     }
 
