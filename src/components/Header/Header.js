@@ -55,7 +55,7 @@ function Header(props) {
             <div className="header_top">
                 <img className="logo" src={logo} alt="logo" />
                 <Link style={{ textDecoration: "none" }} to="/">
-                    <h2>Food Waste</h2>
+                    <h2>Hunger Aid</h2>
                 </Link>
             </div>
             <div className={open ? "header_middle_open" : "header_middle"}>
@@ -93,7 +93,7 @@ function Header(props) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title"><b>Food Waste Management</b></DialogTitle>
+                <DialogTitle id="alert-dialog-title"><b>Hunger Aid</b></DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Are you sure to logout form this website??
